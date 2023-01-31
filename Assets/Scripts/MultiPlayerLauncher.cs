@@ -25,15 +25,31 @@ public class MultiPlayerLauncher : MonoBehaviour
     }
     PhotonNetwork.NickName = defaultName;
   }
-  public void SetPlayerName()
-  {
-    string value = mInputField.text;
-    if (string.IsNullOrEmpty(value))
+
+    //Before refactor:
+  //public void SetPlayerName()
+  //{
+  //  string value = mInputField.text;
+  //  if (string.IsNullOrEmpty(value))
+  //  {
+  //    Debug.LogError("Player Name is null or empty");
+  //    return;
+  //  }
+  //  PhotonNetwork.NickName = value;
+  //  PlayerPrefs.SetString(playerNamePrefKey, value);
+  //}
+
+    //Refactored function:
+    //A value string is unnecassary in this scenario in my opinion, as you can just use
+    //mInputField.text while having the same effect.
+    public void SetPlayerName()
     {
-      Debug.LogError("Player Name is null or empty");
-      return;
+        if (string.IsNullOrEmpty(mInputField.text))
+        {
+            Debug.LogError("Player Name is null or empty");
+            return;
+        }
+        PhotonNetwork.NickName = mInputField.text;
+        PlayerPrefs.SetString(playerNamePrefKey, mInputField.text);
     }
-    PhotonNetwork.NickName = value;
-    PlayerPrefs.SetString(playerNamePrefKey, value);
-  }
 }

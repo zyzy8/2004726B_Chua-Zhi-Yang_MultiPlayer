@@ -12,6 +12,6 @@ public class Menu : MonoBehaviour
   }
   public void OnClick_ButtonMultiPlayer()
   {
-    SceneManager.LoadScene("MultiplayerLauncher");
+    SceneManager.LoadScene("MultiplayerLobby");
   }
 }

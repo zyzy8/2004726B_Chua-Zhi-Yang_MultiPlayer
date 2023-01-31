@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 // This script is responsible for creating the Player
 // at runtime.
@@ -21,15 +22,22 @@ public class PlayerManager : MonoBehaviour
 
   private void Start()
   {
-    StartCoroutine(Coroutine_DelayPlayerLoad(1.0f));
+        //StartCoroutine(Coroutine_DelayPlayerLoad(1.0f));
+
+        //Refactor:
+        //A coroutine is useful, but in this case scenario, I belive that instantiating the character at the start of joining
+        //the map makes it more fluid and smooth in terms of gameplay. Both methods of instantiating the character are essentially
+        //the same in this case, however, calling the method in Start() improve the readability of the code as it requires less
+        //lines of code than a coroutine.
+        CreatePlayer();
   }
 
-  IEnumerator Coroutine_DelayPlayerLoad(float secs)
-  {
-    yield return new WaitForSeconds(secs);
+  //IEnumerator Coroutine_DelayPlayerLoad(float secs)
+  //{
+  //  yield return new WaitForSeconds(secs);
 
-    CreatePlayer();
-  }
+  //  CreatePlayer();
+  //}
 
 
   void CreatePlayer()
@@ -53,8 +61,9 @@ public class PlayerManager : MonoBehaviour
   }
   public void LeaveRoom()
   {
-    //Debug.LogFormat("LeaveRoom");
-    //PhotonNetwork.LeaveRoom();
-  }
+        Debug.LogFormat("LeaveRoom");
+        PhotonNetwork.LeaveRoom();
+        SceneManager.LoadScene("Menu");
+    }
 
 }
