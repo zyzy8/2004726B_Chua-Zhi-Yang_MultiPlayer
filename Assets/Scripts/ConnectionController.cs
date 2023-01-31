@@ -96,4 +96,8 @@ public class ConnectionController : MonoBehaviourPunCallbacks
     SceneManager.LoadScene("Menu");
   }
 
+  public void BackButton()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }
