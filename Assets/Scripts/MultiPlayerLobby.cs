@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MultiPlayerLauncher : MonoBehaviour
+public class MultiPlayerLobby : MonoBehaviour
 {
   [SerializeField]
   InputField mInputField;
