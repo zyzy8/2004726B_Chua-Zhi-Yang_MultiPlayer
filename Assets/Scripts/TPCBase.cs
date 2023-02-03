@@ -35,21 +35,22 @@ namespace PGGE
 
         public void RepositionCamera()
         {
-            int layerMask = 1 << 8;
-            //Invert bitmask to collide against everything except Player layer
-            layerMask = ~layerMask;
+
+            //int layerMask = 1 << 8;
+            ////Invert bitmask to collide against everything except Player layer
+            //layerMask = ~layerMask;
             
-            Vector3 distance = mCameraTransform.position - mPlayerTransform.position;
-            RaycastHit hit;
-            Physics.Raycast(mCameraTransform.position, mCameraTransform.position - mPlayerTransform.up, out hit, distance.magnitude, layerMask);
-            Debug.Log("shooting ray");
-            if (hit.collider)
-            {
-                mCameraTransform.position = hit.point;
-                Debug.Log("hit");
-                mCameraTransform.position = Vector3.MoveTowards(mCameraTransform.position, mPlayerTransform.up, 1f);
+            //Vector3 distance = mCameraTransform.position - mPlayerTransform.position;
+            //RaycastHit hit;
+            //Physics.Raycast(mCameraTransform.position, mCameraTransform.position - mPlayerTransform.up, out hit, distance.magnitude, layerMask);
+            //Debug.Log("shooting ray");
+            //if (hit.collider)
+            //{
+            //    mCameraTransform.position = hit.point;
+            //    Debug.Log("hit");
+            //    mCameraTransform.position = Vector3.MoveTowards(mCameraTransform.position, mPlayerTransform.up, 1f);
                 
-            }
+            //}
             
             //-------------------------------------------------------------------
             // Implement here.

@@ -46,7 +46,7 @@ public class PlayerManager : MonoBehaviour
   void InstantiateCharacter()
    {
         Vector3 pos = mSpawnPoints.GetSpawnPoint().position;
-        pos.y = 3.0f;
+        pos.y = 2.0f;
 
         mPlayerGameObject = PhotonNetwork.Instantiate(mPlayerPrefabName,
             pos,
