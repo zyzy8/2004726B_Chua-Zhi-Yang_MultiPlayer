@@ -7,6 +7,7 @@ public class ButtonSound : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Set to dont destroy on load so that the sound that plays will not abruptly stop upon entering the next scene
         DontDestroyOnLoad(gameObject);
     }
 
