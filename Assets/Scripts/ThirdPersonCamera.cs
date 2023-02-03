@@ -70,7 +70,7 @@ public class ThirdPersonCamera : MonoBehaviour
         // Update the game constant parameters every frame 
         // so that changes applied on the editor can be reflected
         CameraConstants.Damping = mDamping;
-        CameraConstants.CameraPositionOffset = mPositionOffset;
+        //CameraConstants.CameraPositionOffset = mPositionOffset;
         CameraConstants.CameraAngleOffset = mAngleOffset;
         CameraConstants.MinPitch = mMinPitch;
         CameraConstants.MaxPitch = mMaxPitch;

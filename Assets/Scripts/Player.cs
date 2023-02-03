@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using PGGE.Patterns;
 using PGGE;
-using Photon.Pun;
 
 public class Player : MonoBehaviour
 {
-  private PhotonView mPhotonView;
-
   [HideInInspector]
   public FSM mFsm = new FSM();
   public Animator mAnimator;
@@ -34,6 +31,10 @@ public class Player : MonoBehaviour
   public LayerMask mPlayerMask;
   public Canvas mCanvas;
   public RectTransform mCrossHair;
+  public AudioSource mAudioSource;
+  public AudioClip mAudioClipGunShot;
+  public AudioClip mAudioClipReload;
+
 
   public GameObject mBulletPrefab;
   public float mBulletSpeed = 10.0f;
@@ -41,25 +42,10 @@ public class Player : MonoBehaviour
   public int[] RoundsPerSecond = new int[3];
   bool[] mFiring = new bool[3];
 
-  [SerializeField]
-  AudioSource audioSource;
-  [SerializeField]
-  AudioClip shootingSoundClip;
-  [SerializeField]
-  AudioClip reloadSoundClip;
-  [SerializeField]
-  AudioClip noAmmoSoundClip;
-
-  public bool isMultiPlayer = true;
-
 
   // Start is called before the first frame update
   void Start()
   {
-    if (isMultiPlayer)
-    {
-      mPhotonView = GetComponent<PhotonView>();
-    }
     mFsm.Add(new PlayerState_MOVEMENT(this));
     mFsm.Add(new PlayerState_ATTACK(this));
     mFsm.Add(new PlayerState_RELOAD(this));
@@ -70,11 +56,6 @@ public class Player : MonoBehaviour
 
   void Update()
   {
-    if (isMultiPlayer)
-    {
-      if (!mPhotonView.IsMine) return;
-    }
-
     mFsm.Update();
     Aim();
 
@@ -193,18 +174,13 @@ public class Player : MonoBehaviour
 
   public void Move()
   {
-    if (isMultiPlayer)
-    {
-      if (!mPhotonView.IsMine) return;
-    }
-
     mPlayerMovement.HandleInputs();
     mPlayerMovement.Move();
   }
 
   public void NoAmmo()
   {
-    audioSource.PlayOneShot(noAmmoSoundClip);
+
   }
 
   public void Reload()
@@ -216,7 +192,7 @@ public class Player : MonoBehaviour
   {
     yield return new WaitForSeconds(duration);
 
-    audioSource.PlayOneShot(reloadSoundClip);
+    //mAudioSource.PlayOneShot(mAudioClipReload);
   }
 
   public void Fire(int id)
@@ -231,24 +207,21 @@ public class Player : MonoBehaviour
   {
     if (mBulletPrefab == null) return;
 
-    Vector3 dir = -mGunTransform.right.normalized;
-    Vector3 firePoint = mGunTransform.transform.position + dir *
-        1.2f - mGunTransform.forward * 0.1f;
-    GameObject bullet = Instantiate(mBulletPrefab, firePoint,
-        Quaternion.LookRotation(dir) * Quaternion.AngleAxis(90.0f, Vector3.right));
+    //Vector3 dir = -mGunTransform.right.normalized;
+    //Vector3 firePoint = mGunTransform.transform.position + dir *
+    //    1.2f - mGunTransform.forward * 0.1f;
+    //GameObject bullet = Instantiate(mBulletPrefab, firePoint,
+    //    Quaternion.LookRotation(dir) * Quaternion.AngleAxis(90.0f, Vector3.right));
 
-    bullet.GetComponent<Rigidbody>().AddForce(dir * mBulletSpeed, ForceMode.Impulse);
-
-    // randomize the volume.
-    audioSource.volume = Random.Range(0.4f, 0.8f);
-    audioSource.PlayOneShot(shootingSoundClip);
+    //bullet.GetComponent<Rigidbody>().AddForce(dir * mBulletSpeed, ForceMode.Impulse);
+    //mAudioSource.PlayOneShot(mAudioClipGunShot);
   }
 
   IEnumerator Coroutine_Firing(int id)
   {
     mFiring[id] = true;
-    FireBullet();
-    yield return new WaitForSeconds(1.0f / RoundsPerSecond[id]);
+        FireBullet();
+        yield return new WaitForSeconds(1.0f / RoundsPerSecond[id]);
     mFiring[id] = false;
     mBulletsInMagazine -= 1;
   }

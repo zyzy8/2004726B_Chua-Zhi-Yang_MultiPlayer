@@ -7,6 +7,7 @@ namespace PGGE
     // The base class for all third-person camera controllers
     public abstract class TPCBase
     {
+        
         protected Transform mCameraTransform;
         protected Transform mPlayerTransform;
 
@@ -29,10 +30,27 @@ namespace PGGE
         {
             mCameraTransform = cameraTransform;
             mPlayerTransform = playerTransform;
+            
         }
 
         public void RepositionCamera()
         {
+            int layerMask = 1 << 8;
+            //Invert bitmask to collide against everything except Player layer
+            layerMask = ~layerMask;
+            
+            Vector3 distance = mCameraTransform.position - mPlayerTransform.position;
+            RaycastHit hit;
+            Physics.Raycast(mCameraTransform.position, mCameraTransform.position - mPlayerTransform.up, out hit, distance.magnitude, layerMask);
+            Debug.Log("shooting ray");
+            if (hit.collider)
+            {
+                mCameraTransform.position = hit.point;
+                Debug.Log("hit");
+                mCameraTransform.position = Vector3.MoveTowards(mCameraTransform.position, mPlayerTransform.up, 1f);
+                
+            }
+            
             //-------------------------------------------------------------------
             // Implement here.
             //-------------------------------------------------------------------
@@ -43,8 +61,8 @@ namespace PGGE
             // find the nearest collision point to the player
             // shift the camera position to the nearest intersected point
             //-------------------------------------------------------------------
-        }
 
+        }
         public abstract void Update();
     }
 }
