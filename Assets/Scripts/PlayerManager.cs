@@ -43,6 +43,9 @@ public class PlayerManager : MonoBehaviour
 
 
   //Refactor: Breaking up into smaller functions
+  //Instantiates the character at the various spawn locations,
+  //Then sets the TPC camera
+  //And then set the name of the player
   void InstantiateCharacter()
    {
         Vector3 pos = mSpawnPoints.GetSpawnPoint().position;
@@ -67,7 +70,6 @@ public class PlayerManager : MonoBehaviour
    {
         textPlayerName.text = PhotonNetwork.NickName;
    }
-  //Instantiate the character at the spawn locations
   
   public void LeaveRoom()
   {

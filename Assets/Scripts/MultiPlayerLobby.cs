@@ -40,8 +40,8 @@ public class MultiPlayerLobby : MonoBehaviour
   //}
 
     //Refactored function:
-    //A value string is unnecassary in this scenario in my opinion, as you can just use
-    //mInputField.text while having the same effect.
+    //A value string is unnecassary in this scenario in my opinion as it feels redundant. Removing it
+    //will still retain the original effect
     public void SetPlayerName()
     {
         if (string.IsNullOrEmpty(mInputField.text))
